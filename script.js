@@ -1,12 +1,6 @@
-let hits = 0;
-let misses = 0;
-let hasWon = false;
-let hitCounter = document.getElementById("hit_counter");
-let missCounter = document.getElementById("miss_counter");
-let gameStatus = document.getElementById("game_status");
 let gameArea = document.getElementById("game_area");
 
-const createSkyler = (x,y,time)=>{
+const createSkyler = (x,y,t)=>{
     return new Promise((resolve,reject)=>{
         let s = document.createElement("div");
         s.className = "skyler";
@@ -18,7 +12,7 @@ const createSkyler = (x,y,time)=>{
             //spelaren hann inte klicka
             gameArea.removeChild(s);
             resolve(false)
-        },time);
+        },t);
         s.addEventListener("click",(e)=>{
             //spelaren hann
             clearTimeout(timer);
@@ -28,15 +22,21 @@ const createSkyler = (x,y,time)=>{
     })
 }
 (async ()=>{
+    let hits = 0;
+    let lives = 3;
+    let hasWon = false;
+
+    let hitCounter = document.getElementById("hit_counter");
+    let lifeCounter = document.getElementById("life_counter");
+    let gameStatus = document.getElementById("game_status");
     while (!hasWon)
     {
         let x = parseInt(gameArea.offsetLeft+Math.random()*(300));
         let y = parseInt(gameArea.offsetTop+Math.random()*(300));
-        if(await createSkyler(x,y,2000))
+        if(await createSkyler(x,y,1000))
         {
             hits++;
-            misses = 0;
-            missCounter.innerText = misses;
+            lifeCounter.innerText = lives;
             hitCounter.innerText = hits;
             switch(hits) {
                 case 2:
@@ -45,15 +45,15 @@ const createSkyler = (x,y,time)=>{
                 case 7:
                     new Audio("/assets/yes_indeed.mp3").play();
                     break;
-                case 10:
+                case 25:
                     hasWon = true;
                     break;
             }
         }
         else if(hits > 0) {
-            misses++;
-            missCounter.innerText = misses;
-            if(misses == 3) break;
+            lives--;
+            lifeCounter.innerText = lives;
+            if(lives == 0) break;
         }
     }
     if(hasWon)
@@ -67,4 +67,5 @@ const createSkyler = (x,y,time)=>{
     }
     document.getElementById("game_stats").parentNode.removeChild(document.getElementById("game_stats"))
     gameArea.parentElement.removeChild(gameArea);
+    document.getElementById("finish_screen").style.display = "inherit";
 })();

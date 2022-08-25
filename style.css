@@ -13,13 +13,16 @@ div .hit {
     content: 'Träffar: ';
 }
 #hit_counter::after {
-    content: '/10';
+    content: '/25';
 }
-#miss_counter::before {
-    content: "Missar i rad: "
+#life_counter::before {
+    content: "Liv: "
 }
 #game_area {
     background-color: #333333;
     width: calc(300px + 100px);
     height: calc(300px + 100px);
+}
+#finish_screen {
+    display: none;
 }
