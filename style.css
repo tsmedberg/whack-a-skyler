@@ -1,0 +1,25 @@
+.skyler {
+    width: 100px;
+    height: 100px;
+    background-color: magenta;
+    background-image: url(/assets/skyler.png);
+    background-size: cover;
+}
+div .hit {
+    background-image: url(/assets/skyler_hit.png);
+    box-shadow:inset 0 0 0 2000px rgba(255, 0, 150, 0.3)
+}
+#hit_counter::before {
+    content: 'Träffar: ';
+}
+#hit_counter::after {
+    content: '/10';
+}
+#miss_counter::before {
+    content: "Missar i rad: "
+}
+#game_area {
+    background-color: #333333;
+    width: calc(300px + 100px);
+    height: calc(300px + 100px);
+}
